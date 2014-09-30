@@ -1,0 +1,81 @@
+﻿
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Informa - Agencia Tributaria</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="vertical frame">
+        <header class="shrink block align-center">
+            <a href="https://www.agenciatributaria.gob.es/">
+                <img src="img/agencia.jpg" />
+            </a>
+        </header>
+        <section id="main-section" class="stretch block align-center">
+            <div id="ractive-container" class="content block small-12 medium-10 large-8">
+            </div>
+        </section>
+        <footer class="shrink block align-center">
+            <a class="thumbnail" href="http://asesoriaperezherranz.es/">
+                <img src="img/gestoria.jpg" />
+            </a>
+        </footer>
+    </div>
+
+    <script id="ractive-template" type="text/ractive">
+        <input id="keyword-input" type="text" value="{{keyword}}" on-enter="getQuestions: {{keyword}}"
+               placeholder="Introduzca los términos de la búsqueda..." />
+        <ul id="suggestion-list">
+            {{#suggestions}}
+            <li on-click="getQuestions:{{.}}">{{.}}</li>
+            {{/suggestions}}
+        </ul>
+        <ul id="question-list">
+            {{#questions}}
+            <li on-click="getAnswer: {{.}}"><span class="star {{ratingRaw > 0 ? 'selected' : ''}}"></span> {{question}}</li>
+                {{#answer}}
+                <div class="modal-overlay is-active">
+                    <div class="modal is-active block vertical">
+                        <div class="close" on-click="closeAnswer">X</div>
+                        <section class="content block">
+                            {{{answer}}}
+                        </section>
+                        <footer class="shrink block align-center">
+                            <div class="shrink content block">
+                                <span class="star selectable {{ratingRaw >= 0.5 ? 'selected' : ''}}" on-click="rateAnswer:1"></span>
+                                <span class="star selectable {{ratingRaw >= 1.5 ? 'selected' : ''}}" on-click="rateAnswer:2"></span>
+                                <span class="star selectable {{ratingRaw >= 2.5 ? 'selected' : ''}}" on-click="rateAnswer:3"></span>
+                                <span class="star selectable {{ratingRaw >= 3.5 ? 'selected' : ''}}" on-click="rateAnswer:4"></span>
+                                <span class="star selectable {{ratingRaw >= 4.5 ? 'selected' : ''}}" on-click="rateAnswer:5"></span>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+                {{/answer}}
+            {{/questions}}
+        </ul>
+
+        {{#questions.length == 0}}
+        <p>Seleccione alguna de las sugerencias o introduzca los términos de búsqueda y pulse Intro.</p>
+        <p>Haga clic en cualquiera de las preguntas para ver la respuesta.</p>
+        <p>Si valora la respuesta que le sea útil, ayudará a otros usuarios a encontrarla más rápido.</p>
+        {{/questions.length == 0}}
+
+        {{#isLoading}}
+        <div class="modal-overlay is-active">
+            <div class="motion spinner"></div>
+        </div>
+        {{/isLoading}}
+    </script>
+
+    <!--<script src="script/modernizr.js"></script>
+    <script src="script/foundation.js"></script>-->
+    <script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
+    <script src="script/app.js"></script>
+</body>
+</html>
