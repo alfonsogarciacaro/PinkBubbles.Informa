@@ -29,11 +29,11 @@ module Client =
         let! st = async {
             match action with
             | AnswerAction.Request ->
-                st.ractive.toggle("isLoading") |> ignore
+                st.ractive.toggle("isLoading")
                 let url = "api/answer?id=" + st.data.id.ToString()
                 let req = System.Net.WebRequest.Create(url)
                 let! answer = req.AsyncGetJSON<string>()
-                st.ractive.toggle("isLoading") |> ignore
+                st.ractive.toggle("isLoading")
                 return RactiveState(st, {st.data with answer = answer})
             | Rated ->
                 return st
@@ -58,11 +58,11 @@ module Client =
         let! st = async {
             match action with
             | Request ->
-                st.ractive.toggle("isLoading") |> ignore
+                st.ractive.toggle("isLoading")
                 let url = "api/question?keywords=" + WebUtility.UrlEncode(st.data.keyword)
                 let req = System.Net.WebRequest.Create(url)
                 let! data = req.AsyncGetJSON<AppState>()
-                st.ractive.toggle("isLoading") |> ignore
+                st.ractive.toggle("isLoading")
                 return RactiveState(st, data)
             | Wait ->
                 return st
