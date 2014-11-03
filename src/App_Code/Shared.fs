@@ -5,15 +5,13 @@ module PinkBubbles.Informa.Types
 
 open System.Data.Linq.Mapping
 
-[<CLIMutable>]
-[<Table(Name="Informa_Keyword")>]
+[<CLIMutable; Table(Name="Informa_Keyword")>]
 type Keyword = {
     [<Column(IsPrimaryKey=true)>] keywords: string
     [<Column>] count: int
 }
 
-[<CLIMutable>]
-[<Table(Name="Informa_Question")>]
+[<CLIMutable; Table(Name="Informa_Question")>]
 type Question = {
     [<Column(IsPrimaryKey=true)>] id: int
     [<Column>] question: string

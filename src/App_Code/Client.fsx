@@ -3,7 +3,6 @@
 #r "..\..\lib\Funscript.Interop.dll"
 #r "..\..\lib\Funscript.TypeScript.Binding.lib.dll"
 #r "..\..\lib\Funscript.HTML.dll"
-#r "..\..\lib\Funscript.HTML.Ractive.dll"
 
 #load "Shared.fs"
 
@@ -96,8 +95,9 @@ module Client =
         |> Observable.filter (fun ev -> ev.which = Keys.enter)
         |> Observable.add (fun _ -> kwInput.blur())
 
-    // The code below will call FunScript and compile the project to Javascript
-    let code = FunScript.Compiler.Compiler.Compile(expression= <@ main() @> , noReturn=true, shouldCompress=true)
-    let path = System.IO.Path.Combine(__SOURCE_DIRECTORY__, @"..\script\app.js")
-    System.IO.File.WriteAllText(path, code)
+// The code below will call FunScript and compile the project to Javascript
+let code = FunScript.Compiler.Compiler.Compile(expression= <@ Client.main() @> , noReturn=true, shouldCompress=true)
+let path = System.IO.Path.Combine(__SOURCE_DIRECTORY__, @"..\script\app.js")
+System.IO.File.WriteAllText(path, code)
+
 

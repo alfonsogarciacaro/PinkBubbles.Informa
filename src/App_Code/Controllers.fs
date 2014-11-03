@@ -158,10 +158,8 @@ type AnswerController() =
             use reader = new IO.StreamReader(stream, Text.Encoding.GetEncoding(28605))
             let html = reader.ReadToEnd()
             let m = Literals.regexAnswer.Match(html)
-            let answer =
-                match m.Success with
-                | true -> canonize m.Groups.[1].Value false
-                | false -> "Not found"
-            return answer
+            return match m.Success with
+                   | true -> canonize m.Groups.[1].Value false
+                   | false -> "Not found"
         }
         Async.StartAsTask(getAnswer id)
